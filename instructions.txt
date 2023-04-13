@@ -1,0 +1,121 @@
+first to start the project :
+
+Step1: create virtual env
+-python -m venv venv
+-source venv/Scripts/activate (prefer to do it in gitbash)
+
+  Extra for everytime we start the vscode: activate the veirtual env
+  - source venv/Scripts/activate
+
+step2:
+-django-admin startproject <name of the project without spaces>
+  in our case it is userProject
+
+Step-3: to create apps inside the project
+-pytho3 manage.py startapp <name of the app without spaces>
+    in our case it is userApp
+
+Step-4:
+-add the two names in the INSTALLED_APPS
+        'rest_framework',
+        'userApp'
+
+Step-5:
+create the view/Rest endPoint (this is the service for Spring boot)
+ import: from django.http import JsonResponse
+
+Step-5:
+-add the endPoint URL in the url.py and mention the view that it relates and Test it
+   ex:  path('',views.userView)
+
+Extra info:
+ For connecting to the mysql database:
+  - go to setting of the project
+  - seach for databases- change it sqlit to mysql
+  - add the NAME(name of the database), USER(root) and PASSWORD(mysql password)
+
+Extra step for SQL: used to do database migration to Mysql
+- pyhton3 manage.py makemigrations   (It craetes the MYSQL table for User Model)
+- python3 manage.py migrate          (It applies all the migration)
+
+Step-6: run the python server
+- python3 manage.py runserver
+
+Step-7: create app level url
+- copy the url.py from the userProject to the userApp and remove the admin level permission and the url for admin
+- add the view for the userApp in the userApp url
+- in the django.urls import include and add this 
+- path('userApp/',include('userApp.urls')) - this will add all the urls from the userApp
+
+
+--------------------------------------------------------------------
+
+To make the app more dynamic add models, so that the view can be dynamic(service can be dynamic)
+
+Create a model instructions:
+Step 1: import models from django.db
+step 2: craete a class which takes the models.Model as the parameter
+step 3: initialize each variable and set the field type and also specify any special limitations to it.
+step 4: define a __str__ which will return a default string for the model when an obejct is initialized.
+
+Notes:
+Serializer converts DB info to JSON
+De-Serializer Converts JSON data to DB info
+
+Notes:
+We use mixins so that we dont have to repeat the same code for views for different models
+
+ListModelMixin(get()- Handler method) - support for returning the list of object automatically (list() - Action methods)
+CreateModelMixin(Post() Handler method) - Supoort for creating the list of objects (create() - Action methods)
+retrieveModelMixin(get() Handler method) - Support for retrieveing a single object (retrieive() - Action methods)
+UpdateModelMixin(put() handler method) - used for updating a single object (update() - Action methods)
+DestroyModelMixin(delete() handler method) - used for deleing a single object (destroy() - Action methods)
+
+When we create Class based view we will create the Handler methods,
+But we will invoke the Action Method
+
+Notes: Generics simplifies the work more than mixins
+Generics are : CreateAPIView, ListAPIView, RetrieiveAPIViwe, DestroyAPIView, UpdateAPIView, LstCreateAPIBiew, 
+                RetrieveUpdateAPIView, RetreiveDestroyAPIView, RetreiveUdpateDestroyAPIView
+
+pagination Steps and Notes: Add these lines on the settings.py
+REST_FRAMEWORK={
+    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE':2
+}
+ 
+Note: Filtereing, for it install pip3 intall django-filter in command prompt
+Add 'django_filters' in the settings install app
+Add" from django_filters.rest_framework import DjangoFilterBackend "in the views
+Add these also:
+    filter_backends = [DjangoFilterBackend] # it will create a filterset object for us which will do the filtering for us
+    filterset_fields = ['field that i want to use'] # based on which fields the client will do the filtering
+
+
+Note: for authentication and Security
+pyhton3 manage.py createsuperuser
+Suepr user:
+username:admin
+password:flightresvProject
+
+User:
+username:Tester1
+password:djangotest1
+
+Global Authentication is added by adding this 2 lines in the settigns.py under the REST_FRAMEWORK section:
+'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework.authentication.BasicAuthentication'],
+'DEFAULT_PERMISSION_CLASSES':['rest_framework.permissions.IsAuthenticated','rest_framework.permissions.DjangoModelPermissions']
+
+Note: Check this link for setting permissions
+http://localhost:8000/admin/auth/Passenger/
+
+Overall:
+Create a project
+Create the model
+Create the Nested Serializer
+Create the Class Based view/endpoints
+Configure the URL and TEST
+
+Notes: AuthToken
+step1: first in settings Intalled_APPS addt his line
+'rest_framework.authtoken'
