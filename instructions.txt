@@ -96,7 +96,7 @@ Note: for authentication and Security
 pyhton3 manage.py createsuperuser
 Suepr user:
 username:admin
-password:flightresvProject
+password:flightProject
 
 User:
 username:Tester1
