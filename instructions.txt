@@ -119,3 +119,21 @@ Configure the URL and TEST
 Notes: AuthToken
 step1: first in settings Intalled_APPS addt his line
 'rest_framework.authtoken'
+
+step2: add this line in the REST_FRAMEWORK
+-  'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework.authentication.BasicAuthentication','rest_framework.authentication.TokenAuthentication'],
+
+Notes: Auto Token Generated
+Add these 4 imports in the model class
+from django.db.models.signals import post_save # signal we will receive
+from django.dispatch import receiver # it is reciever which is a decprator
+from rest_framework.authtoken.models import Token # model object Token
+from django.conf import settings
+
+After that add these method in Model class
+
+#this is a reciever of signal
+@receiver(post_save,sender = settings.AUTH_USER_MODEL) #when a authentication user is used in a databse
+def createAuthToken(sender, instance, created,**kwargs):
+    if created:
+        Token.objects.create(user=instance)

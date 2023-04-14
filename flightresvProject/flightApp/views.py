@@ -11,6 +11,7 @@ from rest_framework import generics,mixins #used for mixins
 from rest_framework import viewsets
 from rest_framework import filters # this has the search filter class inside it
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions
 # Create your views here.
 
@@ -59,6 +60,7 @@ class FlightViewSet(viewsets.ModelViewSet):
     #filterset_fields = ['flightNumber', 'operatingAirlines'] # based on which fields the client will do the filtering
     filter_backends = [filters.SearchFilter]
     search_fields = ['^operatingAirlines', '=flightNumber', '^departureCity','^arrivalCity', '=dateofDeparture','=timeofDeparture']
+    #permission_classes = [IsAuthenticated,]
 
 class PassengerViewSet(viewsets.ModelViewSet):
     queryset = Passenger.objects.all()#gathers all the objects from Flight model
