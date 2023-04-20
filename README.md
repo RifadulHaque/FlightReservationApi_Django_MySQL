@@ -1,5 +1,12 @@
 # FlightReservationApi_Django_Angular_MySQL
 
+Summary:
+This is basically a Flight Reservation API which is used to reserve flights for clients depending on flight destination, arrival and date.
+The logged in authority can post flights and passengers in the system, if the authority has the permission then he/she can also delete users and flights and also reservations. Even if the permission is given the updates on each of the service is also possible. The super user has all the permissions.
+
+
+Password for the databse is not given yet.
+
 Default path:
 http://localhost:8000/api/
 
