@@ -107,7 +107,7 @@ Global Authentication is added by adding this 2 lines in the settigns.py under t
 'DEFAULT_PERMISSION_CLASSES':['rest_framework.permissions.IsAuthenticated','rest_framework.permissions.DjangoModelPermissions']
 
 Note: Check this link for setting permissions
-http://localhost:8000/admin/auth/Passenger/
+http://localhost:8000/admin/auth/
 
 Overall:
 Create a project
@@ -137,3 +137,24 @@ After that add these method in Model class
 def createAuthToken(sender, instance, created,**kwargs):
     if created:
         Token.objects.create(user=instance)
+
+
+Note: for allowing different localhost
+
+pip install django-cors-headers
+
+Intalled_APPS
+  'corsheaders'
+
+MIDDLEWARE
+  corsheaders.middleware.CorsMiddleware
+
+SETTINGS:
+
+ALLOWED_HOSTS=['*']
+CORS_ORIGIN_ALLOW_ALL = True
+  or
+  CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+   'https://localhost:4200'
+)

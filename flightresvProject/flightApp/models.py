@@ -30,7 +30,7 @@ class Passenger(models.Model):
 
 class Reservation(models.Model):
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
-    passenger = models.OneToOneField(Passenger, on_delete=models.CASCADE)
+    passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
 
 #this is a reciever of signal
 @receiver(post_save,sender = settings.AUTH_USER_MODEL) #when a authentication user is used in a databse
